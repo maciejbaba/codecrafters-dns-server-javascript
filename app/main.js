@@ -17,7 +17,7 @@ function createDNSHeader() {
 
 function encodeIP(ip) {
   const ipParts = ip.split(".");
-  return Buffer.from(ipParts.map(part => parseInt(part)));
+  return Buffer.from(ipParts.map(part => parseInt(part, 10)));
 }
 
 function createAnswerSection() {
