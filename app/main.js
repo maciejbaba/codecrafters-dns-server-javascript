@@ -24,9 +24,9 @@ function createAnswerSection() {
   const domainBuffer = encodeDomainName("codecrafters.io");
   const rest = Buffer.alloc(14);
   rest.writeUInt16BE(1, 0); // type: 1 (A record)
-  rest.writeUInt16BE(1, 0); // class: 1 (IN)
-  rest.writeUInt16BE(300, 2); // ttl
-  rest.writeUInt16BE(4, 6); // rdlength
+  rest.writeUInt16BE(1, 2); // class: 1 (IN)
+  rest.writeUInt16BE(300, 4); // ttl
+  rest.writeUInt16BE(4, 8); // rdlength
   rest.writeUInt32BE(encodeIP("8.8.8.8"), 10); // rdata
 
   return Buffer.concat([domainBuffer, rest]);
