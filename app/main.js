@@ -47,13 +47,11 @@ function encodeDomainName(domainName) {
 
 function createQuestionSection() {
   const encodedDomain = encodeDomainName("codecrafters.io");
-  const question = Buffer.alloc(5 + encodedDomain.length);
-  encodedDomain.copy(question, 0)
-  question[encodedDomain.length] = 0; // null byte to terminate the domain name
-  question.writeUInt16BE(1, encodedDomain.length + 1); // type: 1 (A record)
-  question.writeUInt16BE(1, encodedDomain.length + 3); // class: 1 (IN)
+  const typeAndClass = Buffer.alloc(4);
+  typeAndClass.writeUInt16BE(1, 0); // type: 1 (A record)
+  typeAndClass.writeUInt16BE(1, 2); // class: 1 (IN)
 
-  return question;
+  return Buffer.concat([encodedDomain, typeAndClass]);
 }
 
 udpSocket.on("message", (buf, rinfo) => {
