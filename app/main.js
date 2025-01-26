@@ -63,6 +63,9 @@ udpSocket.on('message', (buf, rinfo) => {
   try {
     const dns = new DNS('codecrafters.io');
 
+    console.log(buf);
+    console.log(rinfo);
+
     const response = Buffer.concat([
       dns.createDNSHeader(),
       dns.createQuestionSection(),
