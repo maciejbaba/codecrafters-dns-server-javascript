@@ -104,11 +104,30 @@ class DNS {
       additionalCount,
     };
   }
+  
+  static parseQuestion(buf) {
+    const name = []
+    let i = 0;
+
+    while (buf[i] !== 0) {
+      const len = buf[i];
+      name.push(buf.subarray(i + 1, i + len + 1).toString());
+      i += len + 1;
+    }
+
+    return name;
+  }
+
+  static constructDomain(domainArray) {
+    return domainArray.join('.');
+  }
 }
 
 udpSocket.on('message', (buf, rinfo) => {
   try {
-    const dns = new DNS('codecrafters.io');
+    const domainArr = DNS.parseQuestion(buf.subarray(12));
+
+    const dns = new DNS(DNS.constructDomain(domainArr));
     const header = dns.parseHeader(buf, 0);
 
     const response = Buffer.concat([
