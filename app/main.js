@@ -57,11 +57,11 @@ function createQuestionSection() {
 
 udpSocket.on("message", (buf, rinfo) => {
   try {
-    const reponseHeader = createDNSHeader();
+    const responseHeader = createDNSHeader();
     const question = createQuestionSection();
     const answer = createAnswerSection();
 
-    const response = Buffer.concat([reponseHeader, question, answer]);
+    const response = Buffer.concat([responseHeader, question, answer]);
     udpSocket.send(response, rinfo.port, rinfo.address);
   } catch (e) {
     console.log(`Error receiving data: ${e}`);
