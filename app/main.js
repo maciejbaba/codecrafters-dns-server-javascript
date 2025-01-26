@@ -21,7 +21,8 @@ function encodeIP(ip) {
 }
 
 function createAnswerSection() {
-  const answer = Buffer.alloc(16);
+  const encodedDomain = encodeDomainName("codecrafters.io");
+  const answer = Buffer.alloc(encodedDomain.length + 14);
   answer.writeUInt16BE(1, 0); // type: 1 (A record)
   answer.writeUInt16BE(1, 2); // class: 1 (IN)
   answer.writeUInt16BE(300, 4); // ttl
