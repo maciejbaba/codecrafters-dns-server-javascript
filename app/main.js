@@ -35,11 +35,13 @@ function createAnswerSection() {
 function encodeDomainName(domainName) {
   const parts = domainName.split('.');
   return Buffer.concat(
-    parts.map((part) => {
-      const label = Buffer.from(part);
-      return Buffer.concat([Buffer.from([part.length]), label]);
-    })
-  ).concat(Buffer.from([0]));
+    parts
+      .map((part) => {
+        const label = Buffer.from(part);
+        return Buffer.concat([Buffer.from([part.length]), label]);
+      })
+      .concat(Buffer.from([0]))
+  );
 }
 
 function createQuestionSection() {
