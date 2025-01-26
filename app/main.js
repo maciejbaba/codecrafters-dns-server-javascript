@@ -21,15 +21,15 @@ function encodeIP(ip) {
 }
 
 function createAnswerSection() {
-  const encodedDomain = encodeDomainName("codecrafters.io");
-  const answer = Buffer.alloc(encodedDomain.length + 14);
-  answer.writeUInt16BE(1, 0); // type: 1 (A record)
-  answer.writeUInt16BE(1, 2); // class: 1 (IN)
-  answer.writeUInt16BE(300, 4); // ttl
-  answer.writeUInt16BE(4, 8); // rdlength
-  answer.writeUInt32BE(encodeIP("8.8.8.8"), 10); // rdata
+  const domainBuffer = encodeDomainName("codecrafters.io");
+  const rest = Buffer.alloc(14);
+  rest.writeUInt16BE(1, 0); // type: 1 (A record)
+  rest.writeUInt16BE(1, 0); // class: 1 (IN)
+  rest.writeUInt16BE(300, 2); // ttl
+  rest.writeUInt16BE(4, 6); // rdlength
+  rest.writeUInt32BE(encodeIP("8.8.8.8"), 10); // rdata
 
-  return answer;
+  return Buffer.concat([domainBuffer, rest]);
 }
 
 function encodeDomainName(domainName) {
